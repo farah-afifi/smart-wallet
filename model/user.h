@@ -1,3 +1,6 @@
+#ifndef USER_H
+#define USER_H
+
 #include <iostream>
 #include <vector>
 
@@ -10,8 +13,9 @@ class User{
 
 public:
     User(int id, string Name, string NationalID );
-    User(){};
+    User();
     int getID();
     string getName();
     string getNationalID();
 };
+#endif

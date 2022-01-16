@@ -10,3 +10,4 @@ string User::getNationalID(){
     return nationalID;
 }
 User::User(int id, string Name, string NationalID ) : ID(id),name(Name),nationalID(NationalID){}
+User::User() : ID(0),name(""),nationalID(""){}

@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tcpConnections/tcpacceptor.h"
-#include "repositoriesDB/userRepository.h"
+#include "control/userController.h"
 int main(int argc, char** argv)
 {
-    userRepository ur ;
-    int id = ur.InsertUser("name", "nationalID333", "password");
-    ur.getUser(3,"password");
+    UserController uc = UserController();
+    uc.signUp("farah", "nanana1", "fdsa");
+    uc.logIn("nanaa","fdsa");
+    // userRepository ur ;
+    // int id = ur.InsertUser("name", "nationalID34", "password");
+    // ur.getUser(id,"password");
 
     /*if (argc < 2 || argc > 4) {
         printf("usage: server <port> [<ip>]\n");
@@ -41,6 +44,6 @@ int main(int argc, char** argv)
             }
         }
     }*/
-    exit(0);
+    
 }
 

@@ -1,13 +1,12 @@
-#include "userRepository.h"
+#include "walletRepository.h"
 #include <mutex>
 #include <stdio.h>
 #include <sqlite3.h>
 #include <stdlib.h>
 #include <string>
 #include <sstream>
-
-User userRepository::getUser(string nationalID , string password){
-   mutex mtx;
+long WalletRepository::getMoneyAmount(int ID){
+    mutex mtx;
    mtx.lock();
 //------------------------------------------
     string query;
@@ -44,42 +43,36 @@ User userRepository::getUser(string nationalID , string password){
    mtx.unlock();   
    return User(ID, name, nationalID);
 }
-int userRepository::InsertUser(string name, string nationalID, string password){
+int WalletRepository::changeMoneyAmount(int ID, long newMoneyAmount){
     mutex mtx;
     mtx.lock();
-//------------------------------------------
-   sqlite3 *database;
-   char *ErrMsg = 0;
-   string query;
+    //------------------------------------------
+    string query;
+    sqlite3* db;
+    sqlite3_stmt* stmt;
 
-   /* Open database */
-      int ret = sqlite3_open("smartWallet.db", &database);
-   
-   if( ret ) {
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(database));
-      return(-1);
-   } 
+    if (sqlite3_open ("smartWallet.db", &db) != SQLITE_OK) {
+        fprintf(stderr, "Error opening database.\n");
+        return -1;
+    }
+    string sql = "UPDATE wallet SET money_amount = ";
+    ostringstream oss;
+    oss << sql << newMoneyAmount << " WHERE user_ID = " << ID <<";" ;
+    query = oss.str();
 
-   /* Create SQL statement */
-   query = "INSERT INTO users(name, nationl_id, PasswordHash) VALUES ('"+ name +"', '"+ nationalID+"','"+password+"');";
+    int rc = sqlite3_prepare(db, query.c_str(), -1, &stmt, 0);
 
+    if(rc != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        return -1;
+    }
+    rc = sqlite3_step(stmt);
 
-   int id;
-   /* Execute SQL statement */
-   ret = sqlite3_exec(database, query.c_str(), 0,0, &ErrMsg);
-   
-   if( ret != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", ErrMsg);
-      sqlite3_free(ErrMsg);
-      return -1;
-   } else {
-      id  = sqlite3_last_insert_rowid(database);
-      //fprintf(stdout, "Record with ID %d has been created successfully\n",id);
-   }
-   sqlite3_close(database);
+    fprintf(stderr, "\n");
+    sqlite3_finalize(stmt);
 
-//------------------------------------------
-   mtx.unlock();
-   return id;
-
+    //------------------------------------------
+    mtx.unlock();   
+    return 1;
 }

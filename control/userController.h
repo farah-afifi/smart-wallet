@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "model/user.h"
 
@@ -7,7 +8,9 @@ class UserController{
     User user;
 
 public:
-    int getID(){}
-    string getName(){}
-    string getNationalID(){}
+    int getID();
+    string getName();
+    string getNationalID();
+    void  logIn(string nationalID, string password);
+    void  signUp(string name, string nationalID, string password);
 };

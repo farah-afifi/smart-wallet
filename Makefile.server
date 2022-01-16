@@ -3,7 +3,8 @@ CFLAGS		= -g -c -Wall
 LDFLAGS		= -l sqlite3
 SOURCES		= server.cpp tcpConnections/tcpstream.cpp tcpConnections/tcpacceptor.cpp \
 			model/wallet.cpp model/user.cpp model/transaction.cpp \
-			control2/walletController.cpp control2/transactionController.cpp\
+			control/walletController.cpp control/transactionController.cpp\
+			control/userController.cpp\
 			repositoriesDB/userRepository.cpp	
 INCLUDES	= -I.
 OBJECTS		= $(SOURCES:.cpp=.o)
