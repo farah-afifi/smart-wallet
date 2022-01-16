@@ -1,0 +1,22 @@
+CC		= g++
+CFLAGS		= -g -c -Wall
+LDFLAGS		= -l sqlite3
+SOURCES		= server.cpp control/tcpstream.cpp control/tcpacceptor.cpp \
+			model/wallet.cpp model/user.cpp model/transaction.cpp \
+			control2/walletController.cpp control2/transactionController.cpp\
+			repositoriesDB/userRepository.cpp	
+INCLUDES	= -I.
+OBJECTS		= $(SOURCES:.cpp=.o)
+TARGET		= server
+
+all: $(SOURCES) $(TARGET)
+
+$(TARGET): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
+
+.cpp.o:
+	$(CC) $(CFLAGS) $(INCLUDES)  $< -o $@
+
+clean:
+	rm -rf $(OBJECTS) $(TARGET)
+
