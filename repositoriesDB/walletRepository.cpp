@@ -7,7 +7,7 @@
 #include <sstream>
 long WalletRepository::getMoneyAmount(int ID){
     mutex mtx;
-   mtx.lock();
+    mtx.lock();
 //------------------------------------------
     string query;
     sqlite3* db;
@@ -15,11 +15,11 @@ long WalletRepository::getMoneyAmount(int ID){
 
     if (sqlite3_open ("smartWallet.db", &db) != SQLITE_OK) {
         fprintf(stderr, "Error opening database.\n");
-        return User();
+        return -1;
     }
-   string sql = "select name, ID from users where nationl_id = '";
+   string sql = "select money_amount from wallet where user_ID = ";
    ostringstream oss;
-   oss << sql << nationalID << "' AND PasswordHash = '" << password <<"';";
+   oss << sql << ID <<";";
    query = oss.str();
 
    int rc = sqlite3_prepare(db, query.c_str(), -1, &stmt, 0);
@@ -27,21 +27,21 @@ long WalletRepository::getMoneyAmount(int ID){
    if(rc != SQLITE_OK)
    {
       fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-      return User();
+      return -1;
    }
    rc = sqlite3_step(stmt);
    if(sqlite3_column_type(stmt,0) == SQLITE_NULL)
-      return User();
+      return -1;
 
-   string name = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0 )));
-   int ID = sqlite3_column_int(stmt,1 );
+   long amountOfMoney = sqlite3_column_int(stmt,0 );
 
    fprintf(stderr, "\n");
    sqlite3_finalize(stmt);
+   sqlite3_close(db);
 
 //------------------------------------------
    mtx.unlock();   
-   return User(ID, name, nationalID);
+   return amountOfMoney ;
 }
 int WalletRepository::changeMoneyAmount(int ID, long newMoneyAmount){
     mutex mtx;

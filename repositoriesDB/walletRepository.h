@@ -5,6 +5,6 @@ using namespace std;
 
 class WalletRepository{
 public:
-    long getMoneyAmount(int ID);
-    long changeMoneyAmount(long newMoneyAmount);
+    static long getMoneyAmount(int ID);
+    static int changeMoneyAmount(int ID, long newMoneyAmount);
 };

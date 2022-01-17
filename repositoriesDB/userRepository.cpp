@@ -39,6 +39,7 @@ User userRepository::getUser(string nationalID , string password){
 
    fprintf(stderr, "\n");
    sqlite3_finalize(stmt);
+   sqlite3_close(db);
 
 //------------------------------------------
    mtx.unlock();   
@@ -74,7 +75,17 @@ int userRepository::InsertUser(string name, string nationalID, string password){
       return -1;
    } else {
       id  = sqlite3_last_insert_rowid(database);
-      //fprintf(stdout, "Record with ID %d has been created successfully\n",id);
+      string query2 = "INSERT INTO wallet VALUES (";//must insert into wallet first
+      ostringstream oss;
+      oss << query2 << id <<  ", 0 );";
+      query2 = oss.str();
+      ret = sqlite3_exec(database, query2.c_str(), 0,0, &ErrMsg);
+   
+      if( ret != SQLITE_OK ){
+         fprintf(stderr, "SQL error inserting wallet: %s\n", ErrMsg);
+         sqlite3_free(ErrMsg);
+         return -1;
+      }
    }
    sqlite3_close(database);
 

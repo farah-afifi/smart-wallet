@@ -1,8 +1,8 @@
 #include "transaction.h"   
-Transaction:: Transaction(string descr, long Amount, int type){
-    transactionDescription = descr;
-    amount = Amount;
-    if(type == 0)
-        transactionType = withdraw;
-    else    transactionType = deposit; 
+Transaction::Transaction(int ID, string type, long Amount, string dateTime)
+{
+    userID = ID;
+    moneyAmount = Amount;
+    transactionType = type;
+    dateTimeOfTransaction = dateTime;
 }

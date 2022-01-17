@@ -1,3 +1,6 @@
+#ifndef WALLET_H
+#define WALLET_H
+
 #include <iostream>
 #include <vector>
 #include "transaction.h"
@@ -16,3 +19,4 @@ public:
     void  deposit(long amount);
     void withdraw(long amount);
 };
+#endif

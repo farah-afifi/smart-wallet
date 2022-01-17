@@ -4,10 +4,9 @@
 using namespace std;
 
 class WalletController{
-    Wallet userWallet;
 
 public: 
-    long getMoneyAmount(string ID);
-    void  deposit(long amount, string ID);
-    void withdraw(long amount, string ID);
+    long getMoneyAmount(int ID);
+    void  deposit(long amount, int ID);
+    void withdraw(long amount, int ID);
 };

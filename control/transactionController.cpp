@@ -1,10 +1,19 @@
 #include "transactionController.h"
+#include "repositoriesDB/transactionsRepository.h"
 
-void TransactionController::makeTransaction(string descr, long amount, int typeOfTransaction){
-    //talk to DB (add transaction with id to db)
-    Transactions.push_back(Transaction(descr,amount,typeOfTransaction));
+void TransactionController::makeTransaction(int ID, string type, long Amount){
+    int status = TransactionRepository().InsertTransaction(ID, type, Amount);
+    if(status != -1)
+        cout << "transaction Added successfully\n";
+    else
+        cout << "error occured!\n";
+
 }
-vector<Transaction> TransactionController::getTransactions(string ID){
-    //talk to db and get all transactiosn using ID
-    return {};
+void TransactionController::getTransactions(int ID){
+    vector<Transaction> transactions;
+    transactions = TransactionRepository().getTransactions(ID);
+    if(transactions.size() != 0)
+        cout <<"transctions fetched!\n";
+    else
+        cout <<"error occured\n";
 }

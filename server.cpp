@@ -2,17 +2,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tcpConnections/tcpacceptor.h"
+#include "control/walletController.h"
+#include "control/transactionController.h"
 #include "control/userController.h"
 int main(int argc, char** argv)
 {
-    UserController uc = UserController();
-    uc.signUp("farah", "nanana1", "fdsa");
-    uc.logIn("nanaa","fdsa");
-    // userRepository ur ;
-    // int id = ur.InsertUser("name", "nationalID34", "password");
-    // ur.getUser(id,"password");
+    UserController ur ;
 
-    /*if (argc < 2 || argc > 4) {
+    ur.logIn("78910","password");
+    int id =  ur.getID() ;
+    WalletController wc;
+    TransactionController tc;
+    wc.getMoneyAmount(id);
+    wc.deposit(500, id);
+    wc.withdraw(200, id);
+    wc.getMoneyAmount(id);
+    wc.withdraw(400,id);
+    wc.getMoneyAmount(id);
+    tc.getTransactions(id);
+
+        /*if (argc < 2 || argc > 4) {
         printf("usage: server <port> [<ip>]\n");
         exit(1);
     }

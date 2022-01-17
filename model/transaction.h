@@ -1,14 +1,17 @@
+#ifndef Transaction_H
+#define Transaction_H
+
 #include <iostream>
-#include <chrono>
 using namespace std;
 
 class Transaction{
 private:
-    string transactionDescription;
-    long amount;
-    enum TransactionType{ withdraw, deposit};
-    TransactionType transactionType;
+    int userID;
+    string transactionType;
+    long moneyAmount;
+    string dateTimeOfTransaction;
 
 public:
-    Transaction(string descr, long Amount, int type);
+    Transaction(int ID, string type, long Amount, string dateTime);
 };
+#endif
