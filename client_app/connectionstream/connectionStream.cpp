@@ -2,13 +2,13 @@
 
 TCPStreamInfo* ConnectionStream::getStream( char *argv[]) {
     TCPConnector *connector = new TCPConnector();
-    stream = connector->connect(argv[2], atoi(argv[1]));
+    ConnectionStream:: stream = connector->connect(argv[2], atoi(argv[1]));
     return stream;
 }
 TCPStreamInfo* ConnectionStream::getStream(){
-    return stream;
+    return ConnectionStream::stream;
 }
 
 ConnectionStream:: ~ConnectionStream (){
-    delete stream;
+    delete ConnectionStream::stream;
 }
