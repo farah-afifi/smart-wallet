@@ -1,4 +1,4 @@
-#include "landingpage.h"
+#include "onboarding/landingpage.h"
 
 #include <QApplication>
 

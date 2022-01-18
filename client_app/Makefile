@@ -52,18 +52,21 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = depositpage.cpp \
-		logindialog.cpp \
+SOURCES = transactions/depositpage.cpp \
+		onboarding/logindialog.cpp \
 		main.cpp \
-		landingpage.cpp \
-		mainmenu.cpp \
-		signupdialog.cpp \
-		withdrawlpage.cpp moc_depositpage.cpp \
+		onboarding/landingpage.cpp \
+		account/mainmenu.cpp \
+		onboarding/signupdialog.cpp \
+		transactions/withdrawlpage.cpp moc_depositpage.cpp \
 		moc_landingpage.cpp \
 		moc_logindialog.cpp \
 		moc_mainmenu.cpp \
 		moc_signupdialog.cpp \
-		moc_withdrawlpage.cpp
+		moc_withdrawlpage.cpp \
+		../tcpConnections/tcpstream.cpp \
+		../tcpConnections/tcpconnector.cpp \
+
 OBJECTS       = depositpage.o \
 		logindialog.o \
 		main.o \
@@ -76,8 +79,12 @@ OBJECTS       = depositpage.o \
 		moc_logindialog.o \
 		moc_mainmenu.o \
 		moc_signupdialog.o \
-		moc_withdrawlpage.o
-DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
+		moc_withdrawlpage.o \
+		../tcpConnections/tcpstream.o \
+		../tcpConnections/tcpconnector.o \
+		
+
+DIST    = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/sanitize.conf \
@@ -151,18 +158,24 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		client_app.pro depositpage.h \
-		landingpage.h \
-		logindialog.h \
-		mainmenu.h \
-		signupdialog.h \
-		withdrawlpage.h depositpage.cpp \
-		logindialog.cpp \
+		client_app.pro transactions/depositpage.h \
+		onboarding/landingpage.h \
+		onboarding/logindialog.h \
+		account/mainmenu.h \
+		onboarding/signupdialog.h \
+		transactions/withdrawlpage.h transactions/depositpage.cpp \
+		onboarding/logindialog.cpp \
 		main.cpp \
-		landingpage.cpp \
-		mainmenu.cpp \
-		signupdialog.cpp \
-		withdrawlpage.cpp
+		onboarding/landingpage.cpp \
+		account/mainmenu.cpp \
+		onboarding/signupdialog.cpp \
+		transactions/withdrawlpage.cpp \
+		../tcpConnections/tcpstream.h \
+		../tcpConnections/tcpstream.cpp \
+		../tcpConnections/tcpconnector.h \
+		../tcpConnections/tcpconnector.cpp \
+
+
 QMAKE_TARGET  = client_app
 DESTDIR       = 
 TARGET        = client_app
@@ -340,9 +353,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents depositpage.h landingpage.h logindialog.h mainmenu.h signupdialog.h withdrawlpage.h $(DISTDIR)/
-	$(COPY_FILE) --parents depositpage.cpp logindialog.cpp main.cpp landingpage.cpp mainmenu.cpp signupdialog.cpp withdrawlpage.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents depositpage.ui landingpage.ui logindialog.ui mainmenu.ui signupdialog.ui withdrawlpage.ui $(DISTDIR)/
+	$(COPY_FILE) --parents transactions/depositpage.h onboarding/landingpage.h onboarding/logindialog.h account/mainmenu.h onboarding/signupdialog.h transactions/withdrawlpage.h $(DISTDIR)/
+	$(COPY_FILE) --parents transactions/depositpage.cpp onboarding/logindialog.cpp main.cpp onboarding/landingpage.cpp account/mainmenu.cpp onboarding/signupdialog.cpp transactions/withdrawlpage.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ui_layouts/depositpage.ui ui_layouts/landingpage.ui ui_layouts/logindialog.ui ui_layouts/mainmenu.ui ui_layouts/signupdialog.ui ui_layouts/withdrawlpage.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -377,35 +390,35 @@ moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_depositpage.cpp moc_landingpage.cpp moc_logindialog.cpp moc_mainmenu.cpp moc_signupdialog.cpp moc_withdrawlpage.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_depositpage.cpp moc_landingpage.cpp moc_logindialog.cpp moc_mainmenu.cpp moc_signupdialog.cpp moc_withdrawlpage.cpp
-moc_depositpage.cpp: depositpage.h \
+moc_depositpage.cpp: transactions/depositpage.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include depositpage.h -o moc_depositpage.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include transactions/depositpage.h -o moc_depositpage.cpp
 
-moc_landingpage.cpp: landingpage.h \
+moc_landingpage.cpp: onboarding/landingpage.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include landingpage.h -o moc_landingpage.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include onboarding/landingpage.h -o moc_landingpage.cpp
 
-moc_logindialog.cpp: logindialog.h \
+moc_logindialog.cpp: onboarding/logindialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include logindialog.h -o moc_logindialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include onboarding/logindialog.h -o moc_logindialog.cpp
 
-moc_mainmenu.cpp: mainmenu.h \
+moc_mainmenu.cpp: account/mainmenu.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include mainmenu.h -o moc_mainmenu.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include account/mainmenu.h -o moc_mainmenu.cpp
 
-moc_signupdialog.cpp: signupdialog.h \
+moc_signupdialog.cpp: onboarding/signupdialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include signupdialog.h -o moc_signupdialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include onboarding/signupdialog.h -o moc_signupdialog.cpp
 
-moc_withdrawlpage.cpp: withdrawlpage.h \
+moc_withdrawlpage.cpp: transactions/withdrawlpage.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include withdrawlpage.h -o moc_withdrawlpage.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/farakh/smart_wallet/client_app/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/farakh/smart_wallet/client_app -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include transactions/withdrawlpage.h -o moc_withdrawlpage.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -414,29 +427,29 @@ compiler_moc_source_clean:
 compiler_uic_make_all: ui_depositpage.h ui_landingpage.h ui_logindialog.h ui_mainmenu.h ui_signupdialog.h ui_withdrawlpage.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_depositpage.h ui_landingpage.h ui_logindialog.h ui_mainmenu.h ui_signupdialog.h ui_withdrawlpage.h
-ui_depositpage.h: depositpage.ui \
+ui_depositpage.h: ui_layouts/depositpage.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic depositpage.ui -o ui_depositpage.h
+	/usr/lib/qt5/bin/uic ui_layouts/depositpage.ui -o ui_depositpage.h
 
-ui_landingpage.h: landingpage.ui \
+ui_landingpage.h: ui_layouts/landingpage.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic landingpage.ui -o ui_landingpage.h
+	/usr/lib/qt5/bin/uic ui_layouts/landingpage.ui -o ui_landingpage.h
 
-ui_logindialog.h: logindialog.ui \
+ui_logindialog.h: ui_layouts/logindialog.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic logindialog.ui -o ui_logindialog.h
+	/usr/lib/qt5/bin/uic ui_layouts/logindialog.ui -o ui_logindialog.h
 
-ui_mainmenu.h: mainmenu.ui \
+ui_mainmenu.h: ui_layouts/mainmenu.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic mainmenu.ui -o ui_mainmenu.h
+	/usr/lib/qt5/bin/uic ui_layouts/mainmenu.ui -o ui_mainmenu.h
 
-ui_signupdialog.h: signupdialog.ui \
+ui_signupdialog.h: ui_layouts/signupdialog.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic signupdialog.ui -o ui_signupdialog.h
+	/usr/lib/qt5/bin/uic ui_layouts/signupdialog.ui -o ui_signupdialog.h
 
-ui_withdrawlpage.h: withdrawlpage.ui \
+ui_withdrawlpage.h: ui_layouts/withdrawlpage.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic withdrawlpage.ui -o ui_withdrawlpage.h
+	/usr/lib/qt5/bin/uic ui_layouts/withdrawlpage.ui -o ui_withdrawlpage.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -448,38 +461,38 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-depositpage.o: depositpage.cpp depositpage.h \
+depositpage.o: transactions/depositpage.cpp transactions/depositpage.h \
 		ui_depositpage.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o depositpage.o depositpage.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o depositpage.o transactions/depositpage.cpp
 
-logindialog.o: logindialog.cpp logindialog.h \
+logindialog.o: onboarding/logindialog.cpp onboarding/logindialog.h \
 		ui_logindialog.h \
-		mainmenu.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logindialog.o logindialog.cpp
+		account/mainmenu.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logindialog.o onboarding/logindialog.cpp
 
-main.o: main.cpp landingpage.h
+main.o: main.cpp onboarding/landingpage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-landingpage.o: landingpage.cpp landingpage.h \
+landingpage.o: onboarding/landingpage.cpp onboarding/landingpage.h \
 		ui_landingpage.h \
-		logindialog.h \
-		signupdialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o landingpage.o landingpage.cpp
+		onboarding/logindialog.h \
+		onboarding/signupdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o landingpage.o onboarding/landingpage.cpp
 
-mainmenu.o: mainmenu.cpp mainmenu.h \
+mainmenu.o: account/mainmenu.cpp account/mainmenu.h \
 		ui_mainmenu.h \
-		withdrawlpage.h \
-		depositpage.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainmenu.o mainmenu.cpp
+		transactions/withdrawlpage.h \
+		transactions/depositpage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainmenu.o account/mainmenu.cpp
 
-signupdialog.o: signupdialog.cpp signupdialog.h \
+signupdialog.o: onboarding/signupdialog.cpp onboarding/signupdialog.h \
 		ui_signupdialog.h \
-		logindialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signupdialog.o signupdialog.cpp
+		onboarding/logindialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signupdialog.o onboarding/signupdialog.cpp
 
-withdrawlpage.o: withdrawlpage.cpp withdrawlpage.h \
+withdrawlpage.o: transactions/withdrawlpage.cpp transactions/withdrawlpage.h \
 		ui_withdrawlpage.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o withdrawlpage.o withdrawlpage.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o withdrawlpage.o transactions/withdrawlpage.cpp
 
 moc_depositpage.o: moc_depositpage.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_depositpage.o moc_depositpage.cpp

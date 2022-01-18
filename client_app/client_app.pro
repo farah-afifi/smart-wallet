@@ -16,29 +16,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    depositpage.cpp \
-    logindialog.cpp \
+    transactions/depositpage.cpp \
+    onboarding/logindialog.cpp \
     main.cpp \
-    landingpage.cpp \
-    mainmenu.cpp \
-    signupdialog.cpp \
-    withdrawlpage.cpp
+    onboarding/landingpage.cpp \
+    account/mainmenu.cpp \
+    onboarding/signupdialog.cpp \
+    transactions/withdrawlpage.cpp
 
 HEADERS += \
-    depositpage.h \
-    landingpage.h \
-    logindialog.h \
-    mainmenu.h \
-    signupdialog.h \
-    withdrawlpage.h
+    transactions/depositpage.h \
+    onboarding/landingpage.h \
+    onboarding/logindialog.h \
+    account/mainmenu.h \
+    onboarding/signupdialog.h \
+    transactions/withdrawlpage.h
 
 FORMS += \
-    depositpage.ui \
-    landingpage.ui \
-    logindialog.ui \
-    mainmenu.ui \
-    signupdialog.ui \
-    withdrawlpage.ui
+    ui_layouts/depositpage.ui \
+    ui_layouts/landingpage.ui \
+    ui_layouts/logindialog.ui \
+    ui_layouts/mainmenu.ui \
+    ui_layouts/signupdialog.ui \
+    ui_layouts/withdrawlpage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,7 +1,7 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
-#include "withdrawlpage.h"
-#include "depositpage.h"
+#include "../transactions/withdrawlpage.h"
+#include "../transactions/depositpage.h"
 
 MainMenu::MainMenu(QWidget *parent) :
     QDialog(parent),
