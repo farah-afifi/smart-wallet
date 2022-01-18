@@ -65,6 +65,7 @@ SOURCES = transactions/depositpage.cpp \
 		moc_signupdialog.cpp \
 		moc_withdrawlpage.cpp \
 		../tcpConnections/tcpstream.cpp \
+		connectionstream/connectionStream.cpp \
 		../tcpConnections/tcpconnector.cpp \
 
 OBJECTS       = depositpage.o \
@@ -81,7 +82,10 @@ OBJECTS       = depositpage.o \
 		moc_signupdialog.o \
 		moc_withdrawlpage.o \
 		../tcpConnections/tcpstream.o \
+		connectionstream/connectionStream.o \
 		../tcpConnections/tcpconnector.o \
+
+
 		
 
 DIST    = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -172,8 +176,11 @@ DIST    = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		transactions/withdrawlpage.cpp \
 		../tcpConnections/tcpstream.h \
 		../tcpConnections/tcpstream.cpp \
+		connectionstream/connectionStream.cpp \
+		connectionstream/connectionStream.h \
 		../tcpConnections/tcpconnector.h \
 		../tcpConnections/tcpconnector.cpp \
+
 
 
 QMAKE_TARGET  = client_app
