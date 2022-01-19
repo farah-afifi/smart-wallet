@@ -38,12 +38,8 @@ void LoginDialog::on_loginButton_clicked()
         else //on success go to main menu
         {
             stream->receive(line, 50);
-            delete stream;
-            stream = connStr.getStream();
-            stream->send("get info command", 50);
-            stream->send(line,50);
             this->close();
-            MainMenu mainMenu;
+            MainMenu mainMenu(stoi(line));
             mainMenu.setModal(true);
             mainMenu.exec();
         }

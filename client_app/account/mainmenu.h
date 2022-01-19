@@ -12,7 +12,7 @@ class MainMenu : public QDialog
     Q_OBJECT
     int ID;
 public:
-    explicit MainMenu(QWidget *parent = nullptr);
+    explicit MainMenu( int ID, QWidget *parent = nullptr);
     ~MainMenu();
 
 private slots:
