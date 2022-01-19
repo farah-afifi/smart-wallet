@@ -6,9 +6,10 @@
 #include <string>
 #include "connectionstream/connectionStream.h"
 #include <sstream>
-MainMenu::MainMenu(int ID, QWidget *parent) : QDialog(parent),
+MainMenu::MainMenu(int id, QWidget *parent) : QDialog(parent),
                                               ui(new Ui::MainMenu)
 {
+    ID = id;
     ui->setupUi(this);
     //Call server to get info
     ConnectionStream connStr;
@@ -55,7 +56,10 @@ MainMenu::MainMenu(int ID, QWidget *parent) : QDialog(parent),
                 stream->receive(amount, 500);
                 stream->receive(date, 50);
 
-                oss << transactionType <<"    " << amount << " " << date << "\n";
+                if(strcmp(transactionType,"Deposit"))
+                    oss << transactionType <<"\t" << amount << "\t" << date << "\n";
+                else
+                    oss << transactionType <<"\t\t" << amount << "\t" << date << "\n";
             }
             multiLineTransactions = oss.str();
 
@@ -74,14 +78,16 @@ MainMenu::~MainMenu()
 
 void MainMenu::on_withdrawButton_clicked()
 {
-    WithdrawlPage withdrawPage;
+    this->close();
+    WithdrawlPage withdrawPage(ID);
     withdrawPage.setModal(true);
     withdrawPage.exec();
 }
 
 void MainMenu::on_despositButton_clicked()
 {
-    DepositPage depositPage;
+    this->close();
+    DepositPage depositPage(ID);
     depositPage.setModal(true);
     depositPage.exec();
 }

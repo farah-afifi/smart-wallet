@@ -11,35 +11,53 @@ string UserController::getName(){
 string UserController::getNationalID(){
     return user.getNationalID();
 }
-void  UserController::logIn(string nationalID, string password){
-    UserController::user = userRepository().getUser(nationalID, password);
-    if(user.getID() == 0)
+void  UserController::logIn(TCPStreamInfo* stream){
+    char nationalID[50]; 
+    char password[50];
+    stream->receive(nationalID, 50);
+    stream->receive(password, 50);
+    UserController::user = userRepository().getUserUsingNationalIDAndPassword(nationalID, password);
+    if(user.getID() == 0){
         cout <<"your password or natoinal ID is incorrect!\n";
+        stream->send("ERROR", 10);
+    }
     else {
         cout << "logged in successfully!\n";
-        //todo view of this user
-        //will call wallet view of said user with ID gotten
+        stream->send("SUCCESS", 10);
+        stream->send(to_string(user.getID()).c_str(), 50);
     }
 }
-void  UserController::signUp(string name, string nationalID, string password){
-    if(name == "" || nationalID == "" || password == "" ){
-        if(name == "")
-            cout << "please enter your name!\n";
-        if( nationalID == "")
-            cout << "Please enter your national ID!\n";
-        if(password == "")
-            cout << "Password cant be empty!\n";
+void  UserController::signUp(TCPStreamInfo* stream){    
+    char name[50];     
+    char nationalID[50]; 
+    char password[50];
+    stream->receive(name, 50);
+    stream->receive(nationalID, 50);
+    stream->receive(password, 50);
+
+    int id = userRepository().InsertUser(name, nationalID, password);
+    if(id == -1){
+        stream->send("ERROR", 10);
     }
     else{
-        int id = userRepository().InsertUser(name, nationalID, password);
-        if(id == -1){
-            cout << "this national ID has been used before!\nYou can login directly using you national ID\n";
-        }
-        else{
-            //todo view of this user
-            //will call wallet view of said user with ID gotten
-            cout <<"signed up successfully\n";
-            user = User(id,name, nationalID);
-        }
+        //todo view of this user
+        //will call wallet view of said user with ID gotten
+        stream->send("SUCCESS", 10);
+        cout <<"signed up successfully\n";
+        user = User(id,name, nationalID);
     }
+    
 }
+void  UserController::getUserInfo(TCPStreamInfo* stream, int ID){ 
+    UserController::user = userRepository().getUserUsingID(ID);
+     if(user.getID() == 0){
+        //your password or natoinal ID is incorrect!
+        stream->send("ERROR", 10);
+    }
+    else {
+        cout << "server: successful retrieval of info!\n";
+        stream->send("SUCCESS", 10);
+        stream->send(user.getName().c_str(), 50);
+        stream->send(user.getNationalID().c_str(), 50);
+    }
+}   

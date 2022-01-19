@@ -1,16 +1,22 @@
 #include "walletController.h"
 #include "transactionController.h"
 #include "repositoriesDB/walletRepository.h"
+#include <string>
 
-long WalletController::getMoneyAmount(int ID)
+void WalletController::getMoneyAmount(TCPStreamInfo *stream, int ID)
 {
     //ID;
     long amount = WalletRepository().getMoneyAmount(ID);
     if (amount != -1)
+    {
         cout << "you have " << amount << " in your account\n";
+        stream->send(to_string(amount).c_str(), 500);
+    }
     else
-        cout << "error";
-    return amount;
+    {
+        stream->send("ERROR", 10);
+        cout <<"couldnt retrieve money amount\n";
+    }
 }
 void WalletController::deposit(long amount, int ID)
 {

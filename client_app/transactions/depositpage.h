@@ -10,9 +10,10 @@ class DepositPage;
 class DepositPage : public QDialog
 {
     Q_OBJECT
+    int ID;
 
 public:
-    explicit DepositPage(QWidget *parent = nullptr);
+    explicit DepositPage(int ID, QWidget *parent = nullptr);
     ~DepositPage();
 
 private slots:

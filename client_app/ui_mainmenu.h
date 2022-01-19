@@ -26,7 +26,6 @@ public:
     QWidget *centralwidget;
     QLabel *label;
     QLabel *label_2;
-    QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
     QLabel *label_6;
@@ -34,7 +33,6 @@ public:
     QPushButton *withdrawButton;
     QPushButton *despositButton;
     QLabel *nameLabel;
-    QLabel *ageLabel;
     QLabel *nationalIDLabel;
     QLabel *balanceLabel;
     QLabel *logMultiLineLabel;
@@ -58,9 +56,6 @@ public:
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(60, 60, 81, 17));
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(60, 80, 81, 17));
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(60, 100, 81, 17));
@@ -83,9 +78,6 @@ public:
         nameLabel = new QLabel(centralwidget);
         nameLabel->setObjectName(QString::fromUtf8("nameLabel"));
         nameLabel->setGeometry(QRect(110, 60, 411, 17));
-        ageLabel = new QLabel(centralwidget);
-        ageLabel->setObjectName(QString::fromUtf8("ageLabel"));
-        ageLabel->setGeometry(QRect(100, 80, 411, 17));
         nationalIDLabel = new QLabel(centralwidget);
         nationalIDLabel->setObjectName(QString::fromUtf8("nationalIDLabel"));
         nationalIDLabel->setGeometry(QRect(150, 100, 411, 17));
@@ -116,7 +108,6 @@ public:
         MainMenu->setWindowTitle(QApplication::translate("MainMenu", "MainWindow", nullptr));
         label->setText(QApplication::translate("MainMenu", "Account Info", nullptr));
         label_2->setText(QApplication::translate("MainMenu", "Name:", nullptr));
-        label_3->setText(QApplication::translate("MainMenu", "Age:", nullptr));
         label_4->setText(QApplication::translate("MainMenu", "National ID:", nullptr));
         label_5->setText(QApplication::translate("MainMenu", "Current Account Balance:", nullptr));
         label_6->setText(QApplication::translate("MainMenu", "Transaction Log History:", nullptr));
@@ -124,7 +115,6 @@ public:
         withdrawButton->setText(QApplication::translate("MainMenu", "Withdraw", nullptr));
         despositButton->setText(QApplication::translate("MainMenu", "Deposit", nullptr));
         nameLabel->setText(QApplication::translate("MainMenu", "Farah Afifi", nullptr));
-        ageLabel->setText(QApplication::translate("MainMenu", "36", nullptr));
         nationalIDLabel->setText(QApplication::translate("MainMenu", "FA123456", nullptr));
         balanceLabel->setText(QApplication::translate("MainMenu", "$12345.00", nullptr));
         logMultiLineLabel->setText(QApplication::translate("MainMenu", "TextLabel", nullptr));

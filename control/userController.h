@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "model/user.h"
+#include "tcpConnections/tcpstream.h"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ public:
     int getID();
     string getName();
     string getNationalID();
-    void  logIn(string nationalID, string password);
-    void  signUp(string name, string nationalID, string password);
+    void  logIn(TCPStreamInfo* stream);
+    void  signUp(TCPStreamInfo* stream);
+    void getUserInfo(TCPStreamInfo* stream, int ID);
 };

@@ -10,9 +10,10 @@ class WithdrawlPage;
 class WithdrawlPage : public QDialog
 {
     Q_OBJECT
+    int ID;
 
 public:
-    explicit WithdrawlPage(QWidget *parent = nullptr);
+    explicit WithdrawlPage(int ID, QWidget *parent = nullptr);
     ~WithdrawlPage();
 
 private slots:

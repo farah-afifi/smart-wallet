@@ -13,5 +13,8 @@ private:
 
 public:
     Transaction(int ID, string type, long Amount, string dateTime);
+    string getType();
+    long getAmount();
+    string getDate();
 };
 #endif

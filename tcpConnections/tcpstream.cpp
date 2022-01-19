@@ -1,6 +1,7 @@
 
 
 #include <arpa/inet.h>
+#include<iostream>
 #include "tcpstream.h"
 
 TCPStreamInfo::TCPStreamInfo(int sd, struct sockaddr_in* address) : m_sd(sd) {
