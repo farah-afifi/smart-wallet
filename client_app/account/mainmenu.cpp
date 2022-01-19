@@ -2,21 +2,43 @@
 #include "ui_mainmenu.h"
 #include "../transactions/withdrawlpage.h"
 #include "../transactions/depositpage.h"
+#include <iostream>
+#include<string>
+#include "connectionstream/connectionStream.h"
 
 MainMenu::MainMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
-
     //Call server to get info
+    ConnectionStream connStr;
+    TCPStreamInfo* stream = connStr.getStream();
 
     // in callback update Account Info
-    ui->nameLabel->setText("Farah Afifi");
-    ui->ageLabel->setText("30");
-    ui->nationalIDLabel->setText("FA123456");
-    ui->balanceLabel->setText("$12345");
-    ui->logMultiLineLabel->setText("Withdraw   $10.10   2022-01-03\nWithdraw   $23.12   2021-12-03\nDeposit   $102.12   2021-03-12");
+    int len;
+    char line[256];
+    if((len = stream->receive(line, 10))> 0) {
+        line[len] = 0;
+        if(strcmp(line,"ERROR") == 0 ){
+            cout << "ERROR OCCURED\n";
+            this->close();
+        }
+        else //on success go to main menu
+        {
+            char nationalID[50]; 
+            char name[50];
+            stream->receive(name, 50);
+            stream->receive(nationalID, 50);
+            ui->nameLabel->setText( QString::fromUtf8(name));
+            ui->nationalIDLabel->setText( QString::fromUtf8(nationalID));
+            ui->balanceLabel->setText("$12345");
+            ui->logMultiLineLabel->setText("Withdraw   $10.10   2022-01-03\nWithdraw   $23.12   2021-12-03\nDeposit   $102.12   2021-03-12");
+        }
+     }
+
+    
+   
 
 }
 

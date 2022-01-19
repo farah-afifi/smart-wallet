@@ -15,10 +15,9 @@ int main(int argc, char *argv[])
         printf("usage: %s <port> <ip>\n", argv[0]);
         exit(1);
     }
-    TCPStreamInfo* stream = ConnectionStream().getStream(argv);
-    stream = ConnectionStream().getStream();
-    if(stream)
-    cout << "hello world!\n";
+    ConnectionStream connStr;
+    TCPStreamInfo* stream1 = connStr.getStream(argv);
+    delete stream1;
     
     QApplication a(argc, argv);
     LandingPage w;

@@ -1,14 +1,19 @@
 #include "connectionStream.h"
 
-TCPStreamInfo* ConnectionStream::getStream( char *argv[]) {
+TCPStreamInfo* ConnectionStream::getStream( char *argV[]) {
     TCPConnector *connector = new TCPConnector();
-    ConnectionStream:: stream = connector->connect(argv[2], atoi(argv[1]));
-    return stream;
+    ConnectionStream:: argv = argV;
+    connStream = connector->connect(argV[2], atoi(argV[1]));
+    return connStream;
 }
 TCPStreamInfo* ConnectionStream::getStream(){
-    return ConnectionStream::stream;
+    TCPConnector *connector = new TCPConnector();
+    connStream = connector->connect(argv[2], atoi(argv[1]));
+    return connStream;
 }
 
 ConnectionStream:: ~ConnectionStream (){
-    delete ConnectionStream::stream;
+    delete connStream;
 }
+char** ConnectionStream::argv =  new char*;
+

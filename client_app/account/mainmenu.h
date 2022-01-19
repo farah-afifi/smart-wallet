@@ -10,7 +10,7 @@ class MainMenu;
 class MainMenu : public QDialog
 {
     Q_OBJECT
-
+    int ID;
 public:
     explicit MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
