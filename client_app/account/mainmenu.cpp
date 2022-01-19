@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include "connectionstream/connectionStream.h"
-
+#include <sstream>
 MainMenu::MainMenu(int ID, QWidget *parent) : QDialog(parent),
                                               ui(new Ui::MainMenu)
 {
@@ -29,22 +29,40 @@ MainMenu::MainMenu(int ID, QWidget *parent) : QDialog(parent),
             ui->nationalIDLabel->setText("error");
             ui->balanceLabel->setText("error");
             ui->logMultiLineLabel->setText("error");
-
         }
         else //on success go to main menu
         {
             char name[50];
             char nationalID[50];
             char moneyAmount[500];
+            char nTransations[50];
+            char transactionType[50];
+            char amount[500];
+            char date[50];
 
             stream->receive(name, 50);
             stream->receive(nationalID, 50);
             stream->receive(moneyAmount, 500);
+            stream->receive(nTransations, 50);
+
+            int numTransactions = atoi(nTransations);
+            string multiLineTransactions;
+            ostringstream oss;
+
+            for (int i = 0; i < numTransactions; i++)
+            {
+                stream->receive(transactionType, 50);
+                stream->receive(amount, 500);
+                stream->receive(date, 50);
+
+                oss << transactionType <<"    " << amount << " " << date << "\n";
+            }
+            multiLineTransactions = oss.str();
 
             ui->nameLabel->setText(QString::fromUtf8(name));
             ui->nationalIDLabel->setText(QString::fromUtf8(nationalID));
             ui->balanceLabel->setText(QString::fromUtf8(moneyAmount));
-            ui->logMultiLineLabel->setText("Withdw   $10.10   2022-01-03\nWithdraw   $23.12   2021-12-03\nDeposit   $102.12   2021-03-12");
+            ui->logMultiLineLabel->setText(QString::fromStdString(multiLineTransactions));
         }
     }
 }
