@@ -2,6 +2,7 @@
 #include "ui_logindialog.h"
 #include "account/mainmenu.h"
 #include <iostream>
+#include <QLineEdit>
 #include "connectionstream/connectionStream.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
@@ -19,6 +20,7 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_loginButton_clicked()
 {
+
     QString nationalID = ui->nationalIDTextEdit->toPlainText();
     QString password = ui->passwordTextEdit->toPlainText();
 
