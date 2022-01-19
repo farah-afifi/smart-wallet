@@ -74,7 +74,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Password</string>
+    <string>Pin Code</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
