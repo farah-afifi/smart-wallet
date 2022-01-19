@@ -64,9 +64,9 @@ SOURCES = transactions/depositpage.cpp \
 		moc_mainmenu.cpp \
 		moc_signupdialog.cpp \
 		moc_withdrawlpage.cpp \
-		../tcpConnections/tcpstream.cpp \
+		../server_app/tcpConnections/tcpstream.cpp \
 		connectionstream/connectionStream.cpp \
-		../tcpConnections/tcpconnector.cpp \
+		../server_app/tcpConnections/tcpconnector.cpp \
 
 OBJECTS       = depositpage.o \
 		logindialog.o \
@@ -81,9 +81,9 @@ OBJECTS       = depositpage.o \
 		moc_mainmenu.o \
 		moc_signupdialog.o \
 		moc_withdrawlpage.o \
-		../tcpConnections/tcpstream.o \
+		../server_app/tcpConnections/tcpstream.o \
 		connectionstream/connectionStream.o \
-		../tcpConnections/tcpconnector.o \
+		../server_app/tcpConnections/tcpconnector.o \
 
 
 		
@@ -174,12 +174,12 @@ DIST    = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		account/mainmenu.cpp \
 		onboarding/signupdialog.cpp \
 		transactions/withdrawlpage.cpp \
-		../tcpConnections/tcpstream.h \
-		../tcpConnections/tcpstream.cpp \
+		../server_app/tcpConnections/tcpstream.h \
+		../server_app/tcpConnections/tcpstream.cpp \
 		connectionstream/connectionStream.cpp \
 		connectionstream/connectionStream.h \
-		../tcpConnections/tcpconnector.h \
-		../tcpConnections/tcpconnector.cpp \
+		../server_app/tcpConnections/tcpconnector.h \
+		../server_app/tcpConnections/tcpconnector.cpp \
 
 
 

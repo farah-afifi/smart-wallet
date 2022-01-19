@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "../../tcpConnections/tcpconnector.h"
-#include "../../tcpConnections/tcpstream.h"
+#include "../../server_app/tcpConnections/tcpconnector.h"
+#include "../../server_app/tcpConnections/tcpstream.h"
 
 class ConnectionStream{
 
